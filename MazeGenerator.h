@@ -4,7 +4,9 @@
 #include "Maze.h"
 
 class MazeGenerator {
-    private:
+    private:    
+        void removeWall(Maze& maze, int x1, int y1, int x2, int y2); //helper function to remove wall between two cells
+        void dfsGenerate(Maze &maze, int x, int y); //helper function for dfs generation
 
     public:
         MazeGenerator();
@@ -12,4 +14,5 @@ class MazeGenerator {
  
         Maze generateDFS(int width, int height); //if using dfs for maze generation
         Maze generatePrim(int width, int height); //if using prim's algorithm for maze generation
-};
+
+    };

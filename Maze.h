@@ -1,6 +1,8 @@
 //header file of Maze class
 //containing general functions and variables of the maze
 //also contains the cell struct for the grid
+#ifndef MAZE_H
+#define MAZE_H
 
 #include <vector>
 #include <utility>  
@@ -31,3 +33,5 @@ class Maze {
         const std::vector<std::vector<Cell>>& getGrid() const;         // const
 
 };
+
+#endif
