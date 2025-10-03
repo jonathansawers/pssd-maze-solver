@@ -5,13 +5,13 @@
 #include "MazeSolver.h"
 #include <iostream>
 
-// Simple ASCII drawing function
+// ASCII drawing function (delete when implemented visual display)
 void drawMaze(const Maze& maze) {
     int w = maze.getWidth();
     int h = maze.getHeight();
     const auto& grid = maze.getGrid();
 
-    // Draw top boundary
+    // top boundary
     for (int x = 0; x < w; x++) std::cout << " _";
     std::cout << "\n";
 
@@ -28,7 +28,16 @@ void drawMaze(const Maze& maze) {
 
 int main() {
     MazeGenerator generator;
-    Maze maze = generator.generateDFS(10, 6); // generate 10x6 maze
-    drawMaze(maze);                            // display maze
+
+    //general check whether it generates correctly, delete when visual display is implemented
+    std::cout << "DFS Maze\n";
+    Maze dfsMaze = generator.generateDFS(20, 20); 
+    drawMaze(dfsMaze);                          
+
+    std::cout << "\nPrim's Maze \n";
+    Maze primMaze = generator.generatePrim(20, 20);
+    drawMaze(primMaze);
+
+    
     return 0;
 }

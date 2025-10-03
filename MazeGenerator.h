@@ -7,7 +7,7 @@ class MazeGenerator {
     private:    
         void removeWall(Maze& maze, int x1, int y1, int x2, int y2); //helper function to remove wall between two cells
         void dfsGenerate(Maze &maze, int x, int y); //helper function for dfs generation
-
+        void addNextCell(Maze &maze, int x, int y, std::vector<std::pair<int,int>> &nextCells); //helper function for prim's generation
     public:
         MazeGenerator();
         Maze generate(int width, int height); //generic maze generation
