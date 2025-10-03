@@ -35,7 +35,7 @@ int main() {
     drawMaze(dfsMaze);                          
 
     std::cout << "\nPrim's Maze \n";
-    Maze primMaze = generator.generatePrim(20, 20);
+    Maze primMaze = generator.generatePrim(20, 20);//looks a bit weird
     drawMaze(primMaze);
 
     
