@@ -15,11 +15,6 @@ struct Cell {
       true};  // top, right, bottom, left (true = wall exists, false = no wall)
 };
 
-struct point {
-  int x;
-  int y;
-};
-
 class Maze {
  private:
   int width;                            // width of the maze
@@ -39,9 +34,7 @@ class Maze {
   std::pair<int, int> getEnd() const;
   std::vector<std::vector<Cell>>& getGrid();              // non-const
   const std::vector<std::vector<Cell>>& getGrid() const;  // const
-  bool atEnd(point current) {
-    return current.x == end.first && current.y == end.second;
-  };
+  bool atEnd(std::pair<int, int> current) { return current == end; };
 };
 
 #endif

@@ -1,10 +1,15 @@
 // header file of Mazesolver class
 // containing functions and variables to solve the maze
+#ifndef MAZE_SOLVE
+#define MAZE_SOLVE
 
 #include "Maze.h"
 using namespace std;
 
-vector<vector<int>> dir = {{0, -1}, {0, 1}, {1, 0}, {-1, 0}};
+using point = pair<int, int>;
+
+// directions to go from each point
+constexpr int DIRS[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
 struct Solution {
   vector<point> tracedPath;
@@ -16,26 +21,31 @@ enum solveType { DFS, BFS, A_STAR };
 
 class MazeSolver {
   Maze* curMaze;
+  bool INCLUDE_ALL_NAV = false;
 
-  bool DFS_SOLVE(point curPoint, Solution& curSol) {
+  bool DFS_SOLVE(point curPoint, vector<vector<bool>>& seen, Solution& curSol) {
+    int x = curPoint.first, y = curPoint.second;
     curSol.tracedPath.push_back(curPoint);
     if (curMaze->atEnd(curPoint)) return true;
-    Cell curCell = curMaze->getGrid()[curPoint.x][curPoint.y];
 
-    for (int i = 0; i < 4; i++) {
-      if (curCell.walls[i]) continue;
-      int nextX = curPoint.x + dir[i][0];
-      int nextY = curPoint.y + dir[i][1];
+    auto& grid = curMaze->getGrid();
+    seen[y][x] = true;
 
-      if (!curMaze->getGrid()[nextX][nextY].visited) {
-        bool foundEnd = DFS_SOLVE({nextX, nextY}, curSol);
-        // just to show its going backwards
-        if (!foundEnd)
-          curSol.tracedPath.push_back(curPoint);
-        else
-          return foundEnd;
-      }
+    for (int i = 0; i < 4; ++i) {
+      if (grid[y][x].walls[i]) continue;
+      int nx = x + DIRS[i][0], ny = y + DIRS[i][1];
+      if (nx < 0 || ny < 0 || ny >= (int)grid.size() ||
+          nx >= (int)grid[0].size())
+        continue;
+      if (seen[ny][nx]) continue;
+
+      if (DFS_SOLVE({nx, ny}, seen, curSol)) return true;
+      if (INCLUDE_ALL_NAV)
+        curSol.tracedPath.push_back(curPoint);
+      else
+        curSol.tracedPath.pop_back();
     }
+    return false;
   }
 
  public:
@@ -44,13 +54,23 @@ class MazeSolver {
 
   void SetMaze(Maze& initMaze);
 
+  void showFullNav(bool showAllNav) { INCLUDE_ALL_NAV = showAllNav; }
+
   Solution solveMazeBlind(solveType type) {
+    Solution res;
+    if (!curMaze) return res;
+
+    vector<vector<bool>> seen(curMaze->getHeight(),
+                              vector<bool>(curMaze->getWidth(), false));
+
     switch (type) {
       case DFS:
-        Solution res;
-        DFS_SOLVE({curMaze->getStart().first, curMaze->getStart().second}, res);
+
+        DFS_SOLVE(curMaze->getStart(), seen, res);
         return res;
         break;
     }
   }
 };
+
+#endif
