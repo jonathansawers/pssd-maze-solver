@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 
 # src files
-SRCS = main.cpp Maze.cpp MazeGenerator.cpp MazeSolver.cpp MazeDisplay.cpp
+SRCS = main.cpp Maze.cpp MazeGenerator.cpp MazeSolver.cpp MazeDisplay.cpp MenuSystem.cpp
 
 # object files
 OBJS = $(SRCS:.cpp=.o)
