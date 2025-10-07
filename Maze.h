@@ -4,6 +4,8 @@
 #ifndef MAZE_H
 #define MAZE_H
 
+#include <bits/stdc++.h>
+
 #include <utility>
 #include <vector>
 
