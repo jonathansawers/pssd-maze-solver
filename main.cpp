@@ -19,12 +19,14 @@ int main() {
   solver.showFullNav(false);
 
   auto solved = solver.solveMazeBlind(DFS);
-  display.displayMazeWithSymbols(solved.tracedPath, {});
+  std::cout << "\nMaze with solution path (colored):\n";
+  display.displayMazeWithColors(solved.tracedPath, {});
 
   solver.showFullNav(true);
 
   solved = solver.solveMazeBlind(DFS);
-  display.displayMazeWithSymbols(solved.tracedPath, {});
+  std::cout << "\nMaze with full navigation (colored):\n";
+  display.displayMazeWithColors(solved.tracedPath, {});
 
   //   std::cout << "\nPrim's Maze \n";
   //   Maze primMaze = generator.generatePrim(20, 20);  // looks a bit weird
