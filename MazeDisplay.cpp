@@ -87,7 +87,7 @@ void MazeDisplay::printHorizontalWall(int row) const {
   int width = maze->getWidth();
   const auto& grid = maze->getGrid();
 
-  std::cout << "+";
+  std::cout << Colors::WHITE << "+";
   for (int x = 0; x < width; x++) {
     if (row < maze->getHeight() - 1 && grid[row][x].walls[2]) {  // bottom wall
       std::cout << "---+";
@@ -95,7 +95,7 @@ void MazeDisplay::printHorizontalWall(int row) const {
       std::cout << "   +";
     }
   }
-  std::cout << std::endl;
+  std::cout << Colors::RESET << std::endl;
 }
 
 // Print cells and vertical walls for a row
@@ -235,4 +235,103 @@ void MazeDisplay::displayMazeWithSymbols(
     // Print horizontal walls
     printHorizontalWall(y);
   }
+}
+
+// Display maze with colors for better visualization
+void MazeDisplay::displayMazeWithColors(
+    const std::vector<std::pair<int, int>>& path,
+    const std::vector<std::pair<int, int>>& visited) const {
+  if (!maze) return;
+
+  int width = maze->getWidth();
+  int height = maze->getHeight();
+  const auto& grid = maze->getGrid();
+
+  // Print top border with color
+  std::cout << Colors::WHITE << "+";
+  for (int x = 0; x < width; x++) {
+    std::cout << "---+";
+  }
+  std::cout << Colors::RESET << std::endl;
+
+  // Print each row
+  for (int y = 0; y < height; y++) {
+    printColoredCellRow(y, path, visited);
+    printHorizontalWall(y);
+  }
+}
+
+// Print colored cells and vertical walls for a row
+void MazeDisplay::printColoredCellRow(int row, 
+    const std::vector<std::pair<int, int>>& path,
+    const std::vector<std::pair<int, int>>& visited) const {
+  if (!maze) return;
+
+  int width = maze->getWidth();
+  const auto& grid = maze->getGrid();
+  auto start = maze->getStart();
+  auto end = maze->getEnd();
+
+  // Left border
+  if (grid[row][0].walls[3]) {  // left wall
+    std::cout << Colors::WHITE << "|" << Colors::RESET;
+  } else {
+    std::cout << " ";
+  }
+
+  // Print each cell in the row
+  for (int x = 0; x < width; x++) {
+    // Determine cell content and color
+    char cellChar = ' ';
+    std::string color = Colors::RESET;
+    
+    if (row == start.second && x == start.first) {
+      cellChar = 'S';  // Start
+      color = Colors::BRIGHT_GREEN + Colors::BOLD;
+    } else if (row == end.second && x == end.first) {
+      cellChar = 'E';  // End
+      color = Colors::BRIGHT_RED + Colors::BOLD;
+    } else {
+      // Check if this cell is part of the solution path
+      bool isInPath = false;
+      for (size_t i = 0; i < path.size(); ++i) {
+        if (path[i].first == x && path[i].second == row) {
+          isInPath = true;
+          if (i + 1 < path.size()) {
+            int dx = path[i + 1].first - x;
+            int dy = path[i + 1].second - row;
+            cellChar = whichArrow(dx, dy);
+          } else {
+            cellChar = '*';
+          }
+          color = Colors::BRIGHT_CYAN + Colors::BOLD;
+          break;
+        }
+      }
+      
+      // If not in path, check if visited
+      if (!isInPath && 
+          std::find(visited.begin(), visited.end(), std::make_pair(x, row)) != visited.end()) {
+        cellChar = '.';
+        color = Colors::YELLOW;
+      }
+    }
+
+    std::cout << " " << color << cellChar << Colors::RESET << " ";
+
+    // Print right wall
+    if (x < width - 1) {
+      if (grid[row][x].walls[1]) {  // right wall
+        std::cout << Colors::WHITE << "|" << Colors::RESET;
+      } else {
+        std::cout << " ";
+      }
+    }
+  }
+
+  // Right border
+  if (grid[row][width - 1].walls[1]) {  // right wall
+    std::cout << Colors::WHITE << "|" << Colors::RESET;
+  }
+  std::cout << std::endl;
 }
