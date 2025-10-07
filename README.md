@@ -1,9 +1,50 @@
-# pssd-maze-solver
-Mase solver program designed for COMPSCI 2203
-Group name: The Maze Runners
+# **pssd-maze-solver**
+**A high-performance maze generation and solving utility designed for COMPSCI 2203.**
+**Group Name:** The Maze Runners
+---
 
-## Install Instructions
-Run `make` and then run `./maze`
+## **Overview**
 
-## Brief Description
-This project will implement a program that can both generate and solve mazes. The generator will create random mazes using algorithms such as recursive backtracking or randomized Prim’s algorithm, ensuring that each maze is unique and solvable. Users will also be able to upload maze designs. The solver will then apply search algorithms to find and visualize the shortest or alternative paths through the maze. The program will run in a Linux environment with a simple text-based or graphical output, and will be documented so that users can easily build, run, and experiment with different algorithms.
+`pssd-maze-solver` is a robust program capable of both generating unique, guaranteed-solvable mazes and finding optimal paths through them. It provides a platform for experimenting with classic graph search and maze generation algorithms.
+
+### Key Features
+* **Dynamic Generation:** Create unique mazes of any size using multiple established algorithms.
+* **Advanced Solving:** Find the shortest, most efficient path from start to finish.
+* **Custom Maze Support:** Easily upload and solve your own maze designs.
+* **Visual Output:** Clear, simple output for visualising both the maze and the solved path.
+
+---
+
+## **Algorithms & Techniques**
+
+### Maze Generation
+* **Recursive Backtracking:** A depth-first search (DFS) based approach for generating mazes with long, winding corridors.
+* **Randomized Prim's Algorithm:** A greedy, wall-erasing approach that often results in mazes with shorter dead-ends and a more "tree-like" structure.
+
+### Maze Solving
+* **Breadth-First Search (BFS):** Ensures the **shortest path** (fewest steps) is found.
+* **Depth-First Search (DFS):** Used to explore alternative or non-optimal paths (if required).
+* **A* Search (Planned Feature):** Quickly finds the shortest path in larger mazes by prioritizing directions closer to the goal.
+
+---
+
+## **Installation & Setup**
+
+This project uses a standard `Makefile` for simple compilation.
+
+1.  **Compile the Program:**
+    The `make` command compiles the source files (`.c` or `.cpp`) and creates the executable.
+    ```bash
+    make
+    ```
+
+---
+
+## **Usage**
+
+Once compiled, run the executable `./maze` and follow the on-screen prompts for generation or solving.
+
+### Basic Execution
+```bash
+./maze
+```
