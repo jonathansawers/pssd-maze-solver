@@ -15,10 +15,12 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y g++
+      run: sudo apt-get update && sudo apt-get install -y build-essential make
 
-    - name: Build project
-      run: g++ -std=c++17 -Wall -Wextra -O2 -o main *.cpp
+    - name: Build project (Makefile)
+      run: make clean && make
 
-    - name: Run tests
-      run: ./main
+    - name: Run smoke test (non-interactive)
+      run: |
+        # Provide minimal input to exit immediately: select option 6 (Exit)
+        printf "6\n" | ./maze
