@@ -20,7 +20,6 @@ void MazeDisplay::displayMaze() const {
 
   int width = maze->getWidth();
   int height = maze->getHeight();
-  const auto& grid = maze->getGrid();
 
   // Print top border
   std::cout << "+";
@@ -245,8 +244,7 @@ void MazeDisplay::displayMazeWithColors(
 
   int width = maze->getWidth();
   int height = maze->getHeight();
-  const auto& grid = maze->getGrid();
-
+  
   // Print top border with color
   std::cout << Colors::WHITE << "+";
   for (int x = 0; x < width; x++) {
