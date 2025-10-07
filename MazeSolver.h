@@ -14,7 +14,7 @@ constexpr int DIRS[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 struct Solution {
   vector<point> tracedPath;
   point foundEndpoint;
-  Solution() : foundEndpoint({0, 0}), tracedPath({}) {};
+  Solution() : tracedPath({}), foundEndpoint({0, 0}) {};
 };
 
 enum solveType { DFS, BFS, A_STAR };
@@ -65,10 +65,19 @@ class MazeSolver {
 
     switch (type) {
       case DFS:
-
         DFS_SOLVE(curMaze->getStart(), seen, res);
         return res;
         break;
+      case BFS:
+        // TODO: Implement BFS algorithm
+        return res;
+        break;
+      case A_STAR:
+        // TODO: Implement A* algorithm
+        return res;
+        break;
+      default:
+        return res;
     }
   }
 };
