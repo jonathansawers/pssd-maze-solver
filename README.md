@@ -53,4 +53,4 @@ Once compiled, run the executable `./maze` and follow the on-screen prompts for 
 ```
 
 ## Reflections
-You can find each group members' reflection in the 'reflections' folder.
+You can find each group members' reflection in the 'reflections'[https://github.com/jonathansawers/pssd-maze-solver/tree/main/reflections] folder.
