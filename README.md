@@ -7,6 +7,9 @@
 
 `pssd-maze-solver` is a robust program capable of both generating unique, guaranteed-solvable mazes and finding optimal paths through them. It provides a platform for experimenting with classic graph search and maze generation algorithms.
 
+## Motivation
+The motivation lies in its ability to provide both an educational and technical platform for exploring fundamental computer science concepts through the engaging medium of maze generation and solving. This project offers a hands-on approach to understanding algorithmic design, graph traversal, recursion, and computational efficiency. By implementing and comparing algorithms such as Recursive Backtracking, Randomised Prim’s, Breadth-First Search, and Depth-First Search, it allowed us to analyse the trade-offs between performance, complexity, and path optimality.
+
 ### Key Features
 * **Dynamic Generation:** Create unique mazes of any size using multiple established algorithms.
 * **Advanced Solving:** Find the shortest, most efficient path from start to finish.
@@ -48,3 +51,6 @@ Once compiled, run the executable `./maze` and follow the on-screen prompts for 
 ```bash
 ./maze
 ```
+
+## Reflections
+You can find each group members' reflection in the 'reflections' folder.
