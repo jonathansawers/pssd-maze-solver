@@ -27,7 +27,7 @@ The maze solver project provides both an educational and technical platform for 
 ### Maze Solving
 * **Breadth-First Search (BFS):** Ensures the **shortest path** (fewest steps) is found.
 * **Depth-First Search (DFS):** Used to explore alternative or non-optimal paths (if required).
-* **A* Search (Planned Feature):** Quickly finds the shortest path in larger mazes by prioritizing directions closer to the goal.
+* **A\* Search:** Quickly finds the shortest path in larger mazes by prioritizing directions closer to the goal.
 
 ---
 
