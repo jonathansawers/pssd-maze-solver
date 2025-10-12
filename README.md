@@ -36,7 +36,6 @@ The maze solver project provides both an educational and technical platform for 
 This project uses a standard `Makefile` for simple compilation.
 
 1.  **Compile the Program:**
-    The `make` command compiles the source files (`.c` or `.cpp`) and creates the executable.
     ```bash
     make
     ```
