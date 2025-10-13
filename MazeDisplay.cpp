@@ -244,7 +244,7 @@ void MazeDisplay::displayMazeWithColors(
 
   int width = maze->getWidth();
   int height = maze->getHeight();
-  
+
   // Print top border with color
   std::cout << Colors::WHITE << "+";
   for (int x = 0; x < width; x++) {
@@ -260,8 +260,8 @@ void MazeDisplay::displayMazeWithColors(
 }
 
 // Print colored cells and vertical walls for a row
-void MazeDisplay::printColoredCellRow(int row, 
-    const std::vector<std::pair<int, int>>& path,
+void MazeDisplay::printColoredCellRow(
+    int row, const std::vector<std::pair<int, int>>& path,
     const std::vector<std::pair<int, int>>& visited) const {
   if (!maze) return;
 
@@ -282,7 +282,7 @@ void MazeDisplay::printColoredCellRow(int row,
     // Determine cell content and color
     char cellChar = ' ';
     std::string color = Colors::RESET;
-    
+
     if (row == start.second && x == start.first) {
       cellChar = 'S';  // Start
       color = Colors::BRIGHT_GREEN + Colors::BOLD;
@@ -306,10 +306,10 @@ void MazeDisplay::printColoredCellRow(int row,
           break;
         }
       }
-      
+
       // If not in path, check if visited
-      if (!isInPath && 
-          std::find(visited.begin(), visited.end(), std::make_pair(x, row)) != visited.end()) {
+      if (!isInPath && std::find(visited.begin(), visited.end(),
+                                 std::make_pair(x, row)) != visited.end()) {
         cellChar = '.';
         color = Colors::YELLOW;
       }
@@ -332,4 +332,27 @@ void MazeDisplay::printColoredCellRow(int row,
     std::cout << Colors::WHITE << "|" << Colors::RESET;
   }
   std::cout << std::endl;
+}
+
+void MazeDisplay::animate(std::vector<std::pair<int, int>>& trace, int howLong,
+                          bool withColour) {
+  if (!maze || trace.empty()) return;
+  std::vector<std::pair<int, int>> visited;
+
+  visited.reserve(trace.size());
+
+  for (size_t i = 0; i < trace.size(); ++i) {
+    visited.push_back(trace[i]);
+    std::vector<std::pair<int, int>> head{trace[i]};
+
+    system("clear");
+
+    if (withColour) {
+      displayMazeWithColors(head, visited);
+    } else {
+      displayMazeWithSymbols(head, visited);
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(howLong));
+  }
 }
