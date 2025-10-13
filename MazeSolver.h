@@ -16,7 +16,7 @@ constexpr int DIRS[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 struct Solution {
   vector<point> tracedPath;
   point foundEndpoint;
-  long long timeTaken = 0;
+  double timeTaken = 0.0;
   Solution() : tracedPath({}), foundEndpoint({0, 0}) {};
 };
 

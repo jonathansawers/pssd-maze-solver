@@ -244,10 +244,10 @@ void MenuSystem::solveMaze() {
         display->displayMaze();
         break;
       case 2:
-        display->displayMazeWithColors(solution.tracedPath, {});
+        display->animate(solution.tracedPath, 200, true);
         break;
       case 3:
-        display->displayMazeWithSymbols(solution.tracedPath, {});
+        display->animate(solution.tracedPath, 200, false);
         break;
     }
   }
