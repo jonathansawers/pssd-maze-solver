@@ -1,2 +1,11 @@
 # Aidan Chan - Reflection
-clearly describes their contribution and development of project skills.
+
+Working on the Maze Solver project was a really rewarding experience. I was responsible for creating all the maze generation algorithms from scratch, including DFS and Prim’s, and I also took charge of refactoring the code to make the program flow smoothly for users. This meant improving the MenuSystem, Maze, MazeDisplay, and MazeSolver classes, as well as adding display enhancements that made the interface clearer and easier to navigate.
+
+One of the biggest challenges was designing the generation algorithms to be both efficient and easy to integrate. I spent a lot of time thinking about how each maze could be built dynamically while still working seamlessly with the rest of the system. Writing these algorithms gave me a deeper understanding of how they behave in realistic scenarios and how their performance changes with different maze sizes.
+
+Refactoring was another major focus. I wanted to make sure the code was organised, readable, and reliable, while keeping memory management clean and predictable. This also meant improving the user interface: adding appropriate user prompts, multiple display modes, and structured information screens so users always know what’s happening. I really enjoyed thinking about the user experience, making the program feel intuitive and polished rather than just functional.
+
+Through this work, I learned a lot about balancing algorithmic logic with usability. Not only was I trying to make the program work, but also to make it easy and enjoyable to interact with (from the perspective of users). I also gained confidence in object-oriented design, understanding how clear separation of responsibilities can make a program easier to maintain and extend.
+
+Overall, this project taught me not just technical skills, but also how to think from a user’s perspective. I’m proud of how the maze generation, refactoring, and display improvements came together to create a cohesive, interactive experience. Looking forward, I’d love to add more algorithms, expand display animations, and introduce automated tests, but I’m happy with the way the program works and how much I’ve learned from building it.

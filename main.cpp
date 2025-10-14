@@ -1,3 +1,5 @@
+//main function for the program
+
 #include <iostream>
 #include "MenuSystem.h"
 

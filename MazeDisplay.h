@@ -35,8 +35,7 @@ class MazeDisplay {
   // Display methods
   void displayMaze() const;
   void displayMazeWithPath(const std::vector<std::pair<int, int>>& path) const;
-  void displayMazeWithVisited(
-      const std::vector<std::pair<int, int>>& visited) const;
+  void displayMazeWithVisited() const;
 
   // Helper methods
   void printHorizontalWall(int row) const;

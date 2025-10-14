@@ -7,74 +7,89 @@
 MenuSystem::MenuSystem()
     : currentMaze(nullptr), display(nullptr), solver(nullptr) {}
 
-MenuSystem::~MenuSystem() {
+MenuSystem::~MenuSystem()
+{
   delete currentMaze;
   delete display;
   delete solver;
 }
 
-void MenuSystem::run() {
+void MenuSystem::run()
+{
   int choice;
   bool running = true;
 
-  std::cout << Colors::BRIGHT_CYAN
-            << "=== MAZE SOLVER PROGRAM ===" << Colors::RESET << std::endl;
-  std::cout << "Welcome to the Interactive Maze Solver!" << std::endl;
-  std::cout << "Generate mazes using different algorithms and solve them with "
-               "various methods."
-            << std::endl
-            << std::endl;
-
-  while (running) {
+  //Main menu loop
+  while (running)
+  {
     displayMainMenu();
     choice = getValidInt("Enter your choice", 1, 6);
 
-    switch (choice) {
-      case 1:
-        generateMaze();
-        break;
-      case 2:
-        if (currentMaze) {
-          solveMaze();
-        } else {
-          std::cout << Colors::YELLOW << "Please generate a maze first!"
-                    << Colors::RESET << std::endl;
-          pauseForUser();
-        }
-        break;
-      case 3:
-        if (currentMaze) {
-          displayMaze();
-        } else {
-          std::cout << Colors::YELLOW << "Please generate a maze first!"
-                    << Colors::RESET << std::endl;
-          pauseForUser();
-        }
-        break;
-      case 4:
-        if (currentMaze) {
-          setStartEndPositions();
-        } else {
-          std::cout << Colors::YELLOW << "Please generate a maze first!"
-                    << Colors::RESET << std::endl;
-          pauseForUser();
-        }
-        break;
-      case 5:
-        showMazeInfo();
-        break;
-      case 6:
-        running = false;
-        std::cout << Colors::GREEN
-                  << "Thank you for using the Maze Solver! Goodbye!"
+    switch (choice)
+    {
+    case 1:
+      generateMaze();
+      break;
+    case 2:
+      if (currentMaze)
+      {
+        solveMaze();
+      }
+      else
+      {
+        std::cout << Colors::YELLOW << "Please generate a maze first!"
                   << Colors::RESET << std::endl;
-        break;
+        pauseForUser();
+      }
+      break;
+    case 3:
+      if (currentMaze)
+      {
+        displayMaze();
+      }
+      else
+      {
+        std::cout << Colors::YELLOW << "Please generate a maze first!"
+                  << Colors::RESET << std::endl;
+        pauseForUser();
+      }
+      break;
+    case 4:
+      if (currentMaze)
+      {
+        setStartEndPositions();
+      }
+      else
+      {
+        std::cout << Colors::YELLOW << "Please generate a maze first!"
+                  << Colors::RESET << std::endl;
+        pauseForUser();
+      }
+      break;
+    case 5:
+      showMazeInfo();
+      break;
+    case 6:
+      running = false;
+      std::cout << Colors::GREEN
+                << "Thank you for using the Maze Solver! Goodbye!"
+                << Colors::RESET << std::endl;
+      break;
     }
   }
 }
 
-void MenuSystem::displayMainMenu() const {
+//displays main menu options
+void MenuSystem::displayMainMenu() const
+{
   clearScreen();
+  std::cout << Colors::BRIGHT_CYAN
+            << "=== MAZE SOLVER PROGRAM ===" << Colors::RESET << std::endl;
+  std::cout << "Welcome to the Interactive Maze Solver!" << std::endl;
+  std::cout << "Generate mazes using different algorithms and solve them with various methods."
+            << std::endl
+            << std::endl;
+
   std::cout << Colors::BRIGHT_CYAN << "=== MAIN MENU ===" << Colors::RESET
             << std::endl;
   std::cout << "1. " << Colors::GREEN << "Generate Maze" << Colors::RESET
@@ -91,7 +106,9 @@ void MenuSystem::displayMainMenu() const {
   std::cout << std::endl;
 }
 
-void MenuSystem::displayGenerationMenu() const {
+//maze generation algorithms options display 
+void MenuSystem::displayGenerationMenu() const
+{
   std::cout << Colors::BRIGHT_CYAN << "=== MAZE GENERATION ===" << Colors::RESET
             << std::endl;
   std::cout << "1. " << Colors::GREEN << "DFS (Depth-First Search)"
@@ -103,7 +120,9 @@ void MenuSystem::displayGenerationMenu() const {
   std::cout << std::endl;
 }
 
-void MenuSystem::displaySolverMenu() const {
+//maze solving algorithms options display
+void MenuSystem::displaySolverMenu() const
+{
   std::cout << Colors::BRIGHT_CYAN << "=== MAZE SOLVING ===" << Colors::RESET
             << std::endl;
   std::cout << "1. " << Colors::GREEN << "DFS (Depth-First Search)"
@@ -117,27 +136,50 @@ void MenuSystem::displaySolverMenu() const {
   std::cout << std::endl;
 }
 
-void MenuSystem::displayDisplayMenu() const {
+//maze display options
+void MenuSystem::displayDisplayMenu(bool solvingMode) const
+{
   std::cout << Colors::BRIGHT_CYAN << "=== DISPLAY OPTIONS ===" << Colors::RESET
             << std::endl;
-  std::cout << "1. " << Colors::WHITE << "Basic Maze" << Colors::RESET
-            << " - Just the maze structure" << std::endl;
-  std::cout << "2. " << Colors::CYAN << "Colored Maze" << Colors::RESET
-            << " - Maze with colors" << std::endl;
-  std::cout << "3. " << Colors::GREEN << "Symbols Only" << Colors::RESET
-            << " - Path with arrows and dots" << std::endl;
-  std::cout << "4. " << Colors::YELLOW << "Back to Main Menu" << Colors::RESET
-            << std::endl;
+
+  // Options shown when solving (after a path is found)
+ if (solvingMode)
+  {
+    std::cout << "1. " << Colors::WHITE << "Basic Maze" << Colors::RESET
+              << " - Show maze with solution path (no animation)" << std::endl;
+    std::cout << "2. " << Colors::CYAN << "Coloured Animation" << Colors::RESET
+              << " - Animate maze solving in colour" << std::endl;
+    std::cout << "3. " << Colors::GREEN << "Symbol Animation" << Colors::RESET
+              << " - Animate path using dots" << std::endl;
+    std::cout << "4. " << Colors::YELLOW << "Back to Main Menu" << Colors::RESET
+              << std::endl;
+  }
+  else
+  {
+    // Options shown when just displaying an existing maze
+    std::cout << "1. " << Colors::WHITE << "Basic Maze" << Colors::RESET
+              << " - Basic maze structure (no path)" << std::endl;
+    std::cout << "2. " << Colors::CYAN << "Coloured Maze" << Colors::RESET
+              << " - Static maze with colours" << std::endl;
+    std::cout << "3. " << Colors::GREEN << "Symbols Only" << Colors::RESET
+              << " - Static maze with symbols" << std::endl;
+    std::cout << "4. " << Colors::YELLOW << "Back to Main Menu" << Colors::RESET
+              << std::endl;
+  }
+
   std::cout << std::endl;
 }
 
-void MenuSystem::generateMaze() {
+//handles maze generation based on user input
+void MenuSystem::generateMaze()
+{
   clearScreen();
   displayGenerationMenu();
 
-  int choice = getValidInt("Select generation algorithm", 1, 3);
+  int choice = getValidInt("Select generation algorithm or quit back to main menu", 1, 3);
 
-  if (choice == 3) return;
+  if (choice == 3)
+    return;
 
   // Get maze dimensions
   int width = getValidInt("Enter maze width (5-50)", 5, 50);
@@ -152,20 +194,21 @@ void MenuSystem::generateMaze() {
   delete solver;
 
   // Generate new maze
-  switch (choice) {
-    case 1:
-      currentMaze = new Maze(generator.generateDFS(width, height));
-      std::cout << Colors::GREEN << "DFS maze generated successfully!"
-                << Colors::RESET << std::endl;
-      break;
-    case 2:
-      currentMaze = new Maze(generator.generatePrim(width, height));
-      std::cout << Colors::GREEN << "Prim's maze generated successfully!"
-                << Colors::RESET << std::endl;
-      break;
+  switch (choice)
+  {
+  case 1:
+    currentMaze = new Maze(generator.generateDFS(width, height));
+    std::cout << Colors::GREEN << "DFS maze generated successfully!"
+              << Colors::RESET << std::endl;
+    break;
+  case 2:
+    currentMaze = new Maze(generator.generatePrim(width, height));
+    std::cout << Colors::GREEN << "Prim's maze generated successfully!"
+              << Colors::RESET << std::endl;
+    break;
   }
 
-  // Initialize display and solver
+  // Initialise display and solver
   display = new MazeDisplay(currentMaze);
   solver = new MazeSolver(*currentMaze);
 
@@ -179,17 +222,20 @@ void MenuSystem::generateMaze() {
   pauseForUser();
 }
 
-void MenuSystem::solveMaze() {
+//user chooses which solving algorithm
+void MenuSystem::solveMaze()
+{
   clearScreen();
   displaySolverMenu();
 
-  int choice = getValidInt("Select solving algorithm", 1, 4);
+  int choice = getValidInt("Select solving algorithm or quit back to main menu", 1, 4);
 
-  if (choice == 4) return;
+  if (choice == 4)
+    return;
 
-  // Configure solver
+  // configure whether to show all visited cells or not
   bool showFullNav =
-      getValidBool("Show full navigation (visited cells)? (y/n)");
+      getValidBool("Show full navigation (visited cells)?");
   solver->showFullNav(showFullNav);
 
   std::cout << Colors::YELLOW << "Solving maze..." << Colors::RESET
@@ -199,87 +245,86 @@ void MenuSystem::solveMaze() {
   Solution solution;
   std::string algorithmName;
 
-  switch (choice) {
-    case 1:
-      solution = solver->solveMazeBlind(DFS);
-      algorithmName = "DFS";
-      break;
-    case 2:
-      // BFS and A* not implemented yet, fall back to DFS
-      // std::cout << Colors::YELLOW << "BFS not implemented yet, using DFS
-      // instead." << Colors::RESET << std::endl;
-      solution = solver->solveMazeBlind(BFS);
-      algorithmName = "BFS";
-      break;
-    case 3:
-      // A* not implemented yet, fall back to DFS
-      //   std::cout << Colors::YELLOW
-      //             << "A* not implemented yet, using DFS instead." <<
-      //             Colors::RESET
-      //             << std::endl;
-      solution = solver->solveMazeBlind(A_STAR);
-      algorithmName = "A*";
-      break;
+  switch (choice)
+  {
+  case 1:
+    solution = solver->solveMazeBlind(DFS);
+    algorithmName = "DFS";
+    break;
+  case 2:
+    solution = solver->solveMazeBlind(BFS);
+    algorithmName = "BFS";
+    break;
+  case 3:
+    solution = solver->solveMazeBlind(A_STAR);
+    algorithmName = "A*";
+    break;
   }
 
-  // Display results
+  // display results
   std::cout << Colors::GREEN << "Solution found using " << algorithmName << "!"
             << Colors::RESET << std::endl;
   std::cout << "Path length: " << solution.tracedPath.size() << " steps"
             << std::endl;
-  //   std::cout << "End point found: (" << solution.foundEndpoint.first << ", "
-  //             << solution.foundEndpoint.second << ")" << std::endl;
   std::cout << "Time taken (milliseconds): " << solution.timeTaken << std::endl;
 
-  // Ask for display preference
+  // ask for display preference
   std::cout << std::endl;
-  displayDisplayMenu();
+  displayDisplayMenu(true);
   int displayChoice =
-      getValidInt("How would you like to display the solution?", 1, 4);
+      getValidInt("Choose how to display the solution or quit back to menu", 1, 4);
 
-  if (displayChoice != 4) {
+  if (displayChoice != 4)
+  {
     std::cout << std::endl;
-    switch (displayChoice) {
-      case 1:
-        display->displayMaze();
-        break;
-      case 2:
-        display->animate(solution.tracedPath, 200, true);
-        break;
-      case 3:
-        display->animate(solution.tracedPath, 200, false);
-        break;
+    switch (displayChoice)
+    {
+    case 1:
+      display->displayMazeWithPath(solution.tracedPath);
+      break;
+    case 2:
+      display->animate(solution.tracedPath, 200, true);
+      break;
+    case 3:
+      display->animate(solution.tracedPath, 200, false);
+      break;
     }
   }
 
   pauseForUser();
 }
 
-void MenuSystem::displayMaze() {
+//display the maze in different formats
+void MenuSystem::displayMaze()
+{
   clearScreen();
-  displayDisplayMenu();
+  displayDisplayMenu(false);
 
-  int choice = getValidInt("Select display type", 1, 4);
+  int choice = getValidInt("Select display type or quit back to main menu", 1, 4);
 
-  if (choice == 4) return;
+  if (choice == 4)
+    return;
 
   std::cout << std::endl;
-  switch (choice) {
-    case 1:
-      display->displayMaze();
-      break;
-    case 2:
-      display->displayMazeWithColors({}, {});
-      break;
-    case 3:
-      display->displayMazeWithSymbols({}, {});
-      break;
+  switch (choice)
+  {
+  case 1:
+    display->displayMaze();
+    break;
+  case 2:
+    display->displayMazeWithColors({}, {});
+    break;
+  case 3:
+    display->displayMazeWithSymbols({}, {});
+    break;
   }
 
   pauseForUser();
 }
 
-void MenuSystem::setStartEndPositions() {
+//handles user input for start and end positions for mazes
+void MenuSystem::setStartEndPositions()
+{
   clearScreen();
   std::cout << Colors::BRIGHT_CYAN
             << "=== SET START/END POSITIONS ===" << Colors::RESET << std::endl;
@@ -294,18 +339,10 @@ void MenuSystem::setStartEndPositions() {
             << currentMaze->getEnd().second << ")" << std::endl;
   std::cout << std::endl;
 
-  int startX = getValidInt(
-      "Enter start X coordinate (0-" + std::to_string(width - 1) + ")", 0,
-      width - 1);
-  int startY = getValidInt(
-      "Enter start Y coordinate (0-" + std::to_string(height - 1) + ")", 0,
-      height - 1);
-  int endX = getValidInt(
-      "Enter end X coordinate (0-" + std::to_string(width - 1) + ")", 0,
-      width - 1);
-  int endY = getValidInt(
-      "Enter end Y coordinate (0-" + std::to_string(height - 1) + ")", 0,
-      height - 1);
+  int startX = getValidInt("Enter start X coordinate:", 0, width - 1);
+  int startY = getValidInt("Enter start Y coordinate:", 0, height - 1);
+  int endX = getValidInt("Enter end X coordinate:", 0, width - 1);
+  int endY = getValidInt("Enter end Y coordinate:", 0, height - 1);
 
   currentMaze->setStart(startX, startY);
   currentMaze->setEnd(endX, endY);
@@ -318,16 +355,21 @@ void MenuSystem::setStartEndPositions() {
   pauseForUser();
 }
 
-void MenuSystem::showMazeInfo() {
+//describes dimensions of maze
+void MenuSystem::showMazeInfo()
+{
   clearScreen();
   std::cout << Colors::BRIGHT_CYAN
             << "=== MAZE INFORMATION ===" << Colors::RESET << std::endl;
 
-  if (!currentMaze) {
+  if (!currentMaze)
+  {
     std::cout << Colors::YELLOW
               << "No maze loaded. Please generate a maze first."
               << Colors::RESET << std::endl;
-  } else {
+  }
+  else
+  {
     std::cout << "Maze Size: " << currentMaze->getWidth() << "x"
               << currentMaze->getHeight() << std::endl;
     std::cout << "Start Position: (" << currentMaze->getStart().first << ", "
@@ -342,14 +384,20 @@ void MenuSystem::showMazeInfo() {
   pauseForUser();
 }
 
-int MenuSystem::getValidInt(const std::string& prompt, int min, int max) const {
+//helper function to ensure a valid integer input within a specified range
+int MenuSystem::getValidInt(const std::string &prompt, int min, int max) const
+{
   int value;
-  while (true) {
+  while (true)
+  {
     std::cout << prompt << " (" << min << "-" << max << "): ";
-    if (std::cin >> value && value >= min && value <= max) {
+    if (std::cin >> value && value >= min && value <= max)
+    {
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       return value;
-    } else {
+    }
+    else
+    {
       std::cout << Colors::RED
                 << "Invalid input! Please enter a number between " << min
                 << " and " << max << "." << Colors::RESET << std::endl;
@@ -359,25 +407,35 @@ int MenuSystem::getValidInt(const std::string& prompt, int min, int max) const {
   }
 }
 
-bool MenuSystem::getValidBool(const std::string& prompt) const {
+//helper function to ensure a valid boolean input (y/n)
+bool MenuSystem::getValidBool(const std::string &prompt) const
+{
   char response;
-  while (true) {
+  while (true)
+  {
     std::cout << prompt << " (y/n): ";
     std::cin >> response;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    if (response == 'y' || response == 'Y') {
+    if (response == 'y' || response == 'Y')
+    {
       return true;
-    } else if (response == 'n' || response == 'N') {
+    }
+    else if (response == 'n' || response == 'N')
+    {
       return false;
-    } else {
+    }
+    else
+    {
       std::cout << Colors::RED << "Invalid input! Please enter 'y' or 'n'."
                 << Colors::RESET << std::endl;
     }
   }
 }
 
-void MenuSystem::clearScreen() const {
+//clear terminal screen (useful for removing visual clutter in terminal
+void MenuSystem::clearScreen() const
+{
 #ifdef _WIN32
   system("cls");
 #else
@@ -385,7 +443,9 @@ void MenuSystem::clearScreen() const {
 #endif
 }
 
-void MenuSystem::pauseForUser() const {
+//pause execution until user presses enter (allows for better interactivity for the user)
+void MenuSystem::pauseForUser() const
+{
   std::cout << std::endl
             << Colors::CYAN << "Press Enter to continue..." << Colors::RESET;
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

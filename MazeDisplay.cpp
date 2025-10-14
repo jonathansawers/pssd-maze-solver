@@ -37,11 +37,14 @@ void MazeDisplay::displayMaze() const {
 
 // Display maze with solution path
 void MazeDisplay::displayMazeWithPath(
-    const std::vector<std::pair<int, int>>& path) const {
+  const std::vector<std::pair<int, int>>& path) const {
   if (!maze) return;
 
   int width = maze->getWidth();
   int height = maze->getHeight();
+  const auto& grid = maze->getGrid();
+  auto start = maze->getStart();
+  auto end = maze->getEnd();
 
   // Print top border
   std::cout << "+";
@@ -52,14 +55,63 @@ void MazeDisplay::displayMazeWithPath(
 
   // Print each row
   for (int y = 0; y < height; y++) {
-    printCellRow(y);
+    // Left border
+    if (grid[y][0].walls[3]) {
+      std::cout << "|";
+    } else {
+      std::cout << " ";
+    }
+
+    // Print each cell
+    for (int x = 0; x < width; x++) {
+      char cellChar = ' ';
+
+      if (y == start.second && x == start.first) {
+        cellChar = 'S';
+      } else if (y == end.second && x == end.first) {
+        cellChar = 'E';
+      } else {
+        // check if (x, y) is in path
+        for (size_t i = 0; i < path.size(); ++i) {
+          if (path[i].first == x && path[i].second == y) {
+            if (i + 1 < path.size()) {
+              int dx = path[i + 1].first - x;
+              int dy = path[i + 1].second - y;
+              cellChar = whichArrow(dx, dy);
+            } else {
+              cellChar = '*';
+            }
+            break;
+          }
+        }
+      }
+
+      std::cout << " " << cellChar << " ";
+
+      // Right wall
+      if (x < width - 1) {
+        if (grid[y][x].walls[1]) {
+          std::cout << "|";
+        } else {
+          std::cout << " ";
+        }
+      }
+    }
+
+    // Right border
+    if (grid[y][width - 1].walls[1]) {
+      std::cout << "|";
+    }
+    std::cout << std::endl;
+
+    // Print horizontal walls
     printHorizontalWall(y);
   }
 }
 
+
 // Display maze with visited cells
-void MazeDisplay::displayMazeWithVisited(
-    const std::vector<std::pair<int, int>>& visited) const {
+void MazeDisplay::displayMazeWithVisited() const {
   if (!maze) return;
 
   int width = maze->getWidth();
